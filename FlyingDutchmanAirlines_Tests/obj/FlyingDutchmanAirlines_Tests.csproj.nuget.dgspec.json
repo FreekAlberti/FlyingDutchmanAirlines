@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines_Tests\\FlyingDutchmanAirlines_Tests.csproj": {}
+    "C:\\Projects\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines_Tests\\FlyingDutchmanAirlines_Tests.csproj": {}
   },
   "projects": {
-    "E:\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines.csproj": {
+    "C:\\Projects\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines.csproj",
+        "projectUniqueName": "C:\\Projects\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines.csproj",
         "projectName": "FlyingDutchmanAirlines",
-        "projectPath": "E:\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines.csproj",
+        "projectPath": "C:\\Projects\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines.csproj",
         "packagesPath": "C:\\Users\\feder\\.nuget\\packages\\",
-        "outputPath": "E:\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines\\obj\\",
+        "outputPath": "C:\\Projects\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
@@ -77,14 +77,14 @@
         }
       }
     },
-    "E:\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines_Tests\\FlyingDutchmanAirlines_Tests.csproj": {
+    "C:\\Projects\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines_Tests\\FlyingDutchmanAirlines_Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines_Tests\\FlyingDutchmanAirlines_Tests.csproj",
+        "projectUniqueName": "C:\\Projects\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines_Tests\\FlyingDutchmanAirlines_Tests.csproj",
         "projectName": "FlyingDutchmanAirlines_Tests",
-        "projectPath": "E:\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines_Tests\\FlyingDutchmanAirlines_Tests.csproj",
+        "projectPath": "C:\\Projects\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines_Tests\\FlyingDutchmanAirlines_Tests.csproj",
         "packagesPath": "C:\\Users\\feder\\.nuget\\packages\\",
-        "outputPath": "E:\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines_Tests\\obj\\",
+        "outputPath": "C:\\Projects\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines_Tests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
@@ -105,8 +105,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "E:\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines.csproj": {
-                "projectPath": "E:\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines.csproj"
+              "C:\\Projects\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines.csproj": {
+                "projectPath": "C:\\Projects\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines\\FlyingDutchmanAirlines.csproj"
               }
             }
           }
