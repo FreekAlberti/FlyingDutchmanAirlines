@@ -1,8 +1,12 @@
 ﻿using FlyingDutchmanAirlines;
+using FlyingDutchmanAirlines.DatabaseLayer.Models;
+using FlyingDutchmanAirlines.Exceptions;
 using FlyingDutchmanAirlines.RepositoryLayer;
+using FlyingDutchmanAirlines_Tests.Stubs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FlyingDutchmanAirlines_Tests.RepositoryLayer
@@ -19,13 +23,21 @@ namespace FlyingDutchmanAirlines_Tests.RepositoryLayer
             DbContextOptions<FlyingDutchmanAirlinesContext> dbContextOptions = new DbContextOptionsBuilder<FlyingDutchmanAirlinesContext>()
                 .UseInMemoryDatabase("FlyingDutchman")
                 .Options;
-            _context = new FlyingDutchmanAirlinesContext(dbContextOptions);
+            _context = new FlyingDutchmanAirlinesContext_Stub(dbContextOptions);
             _repository = new BookingRepository(_context);
             Assert.IsNotNull(_repository);
         }
 
         [TestMethod]
-        public void CreateBooking_Success() { }
+        public async Task CreateBooking_Success()
+        {
+            await _repository.CreateBooking(1, 0);
+            Booking booking = _context.Bookings.First();
+            Assert.IsNotNull(booking);
+            Assert.AreEqual(1, booking.CustomerId);
+            Assert.AreEqual(0, booking.FlightNumber);
+        }
+
         [TestMethod]
         [DataRow(-1, 0)]
         [DataRow(0, -1)]
@@ -34,6 +46,12 @@ namespace FlyingDutchmanAirlines_Tests.RepositoryLayer
         public async Task CreateBooking_Failure_InvalidInputs(int customerID, int flightNumber)
         {
             await _repository.CreateBooking(customerID, flightNumber);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(CouldNotAddBookingToDatabaseException))]
+        public async Task CreateBooking_Failure_DatabaseError()
+        {
+            await _repository.CreateBooking(0, 1);
         }
     }
 }

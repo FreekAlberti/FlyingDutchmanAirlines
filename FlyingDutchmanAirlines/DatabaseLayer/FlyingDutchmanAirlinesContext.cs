@@ -9,6 +9,7 @@ namespace FlyingDutchmanAirlines
     {
         public FlyingDutchmanAirlinesContext()
         {
+            base.Database.EnsureDeleted();
         }
 
         public FlyingDutchmanAirlinesContext(DbContextOptions<FlyingDutchmanAirlinesContext> options)

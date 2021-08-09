@@ -25,20 +25,19 @@ namespace FlyingDutchmanAirlines.RepositoryLayer
             }
             Booking newBooking = new(customerId, flightNumber)
             {
-                 CustomerId = customerId,
-                 FlightNumber = flightNumber
+                CustomerId = customerId,
+                FlightNumber = flightNumber
             };
             try
             {
                 _context.Bookings.Add(newBooking);
                 await _context.SaveChangesAsync();
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                Console.WriteLine($"Exception during database query: { exception.Message}");
+                Console.WriteLine($"Exception during database query: { ex.Message}");
                 throw new CouldNotAddBookingToDatabaseException();
             }
-            // 192************************************* test to commit
         }
     }
 }
