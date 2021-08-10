@@ -1,4 +1,6 @@
 ﻿using FlyingDutchmanAirlines.DatabaseLayer.Models;
+using FlyingDutchmanAirlines.Exceptions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,8 +25,8 @@ namespace FlyingDutchmanAirlines.RepositoryLayer
                 throw new ArgumentException("invalid argument provided");
             }
 
-            return new Airport();
-            // 9.4
+            return await _context.Airports.FirstOrDefaultAsync(a => a.AirportId == airportID)
+                ?? throw new AirportNotFoundException();
         }
     }
 }
