@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using FlyingDutchmanAirlines.RepositoryLayer;
 using FlyingDutchmanAirlines.DatabaseLayer.Models;
 using System.IO;
+using FlyingDutchmanAirlines.Exceptions;
 
 namespace FlyingDutchmanAirlines_Tests.RepositoryLayer
 {
@@ -26,25 +27,63 @@ namespace FlyingDutchmanAirlines_Tests.RepositoryLayer
                 .UseInMemoryDatabase("FlyingDutchman")
                 .Options;
             _context = new FlyingDutchmanAirlinesContext_Stub(dbContextOptions);
-            Airport newAirport = new Airport
+            SortedList<string, Airport> airports = new()
             {
-                AirportId = 0,
-                City = "Nuuk",
-                Iata = "GOH"
+                {
+                    "GOH",
+                    new Airport
+                    {
+                        AirportId = 0,
+                        City = "Nuuk",
+                        Iata = "GOH"
+                    }
+                },
+                {
+                    "PHX",
+                    new Airport
+                    {
+                        AirportId = 1,
+                        City = "Phoenix",
+                        Iata = "PHX"
+                    }
+                },
+                {
+                    "DDH",
+                    new Airport
+                    {
+                        AirportId = 2,
+                        City = "Bennington",
+                        Iata = "DDH"
+                    }
+                },
+                {
+                    "RDU",
+                    new Airport
+                    {
+                        AirportId = 3,
+                        City = "Raleigh-Durham",
+                        Iata = "RDU"
+                    }
+                }
             };
-            _context.Airports.Add(newAirport);
+            _context.Airports.AddRange(airports.Values);
             await _context.SaveChangesAsync();
             _repository = new AirportRepository(_context);
             Assert.IsNotNull(_repository);
         }
         [TestMethod]
-        public async Task GetAirportByID_Success()
+        [DataRow(0)]
+        [DataRow(1)]
+        [DataRow(2)]
+        [DataRow(3)]
+        public async Task GetAirportById_Success(int airportId)
         {
-            Airport airport = await _repository.GetAirportByID(0);
+            Airport airport = await _repository.GetAirportByID(airportId);
             Assert.IsNotNull(airport);
-            Assert.AreEqual(0, airport.AirportId);
-            Assert.AreEqual("Nuuk", airport.City);
-            Assert.AreEqual("GOH", airport.Iata);
+            Airport dbAirport = _context.Airports.First(a => a.AirportId == airportId);
+            Assert.AreEqual(dbAirport.AirportId, airport.AirportId);
+            Assert.AreEqual(dbAirport.City, airport.City);
+            Assert.AreEqual(dbAirport.Iata, airport.Iata);
         }
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
@@ -66,6 +105,12 @@ namespace FlyingDutchmanAirlines_Tests.RepositoryLayer
             {
                 outputStream.Dispose();
             }
+        }
+        [TestMethod]
+        [ExpectedException(typeof(AirportNotFoundException))]
+        public async Task GetAirportByID_Failure_DatabaseException()
+        {
+            await _repository.GetAirportByID(10);
         }
     }
 }

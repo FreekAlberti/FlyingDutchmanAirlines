@@ -18,7 +18,7 @@ namespace FlyingDutchmanAirlines.RepositoryLayer
         }
         public async Task CreateBooking(int customerId, int flightNumber)
         {
-            if (customerId < 0 || flightNumber < 0)
+            if (!customerId.IsPositive() || !flightNumber.IsPositive())
             {
                 Console.WriteLine($"Argument Exception in CreateBooking! CustomerID = {customerId}, FlightNumber = {flightNumber}");
                 throw new ArgumentException("Invalid arguments provided");
