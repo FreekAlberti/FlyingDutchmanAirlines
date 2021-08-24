@@ -16,7 +16,11 @@ namespace FlyingDutchmanAirlines.RepositoryLayer
         {
             _context = context;
         }
-        public async Task CreateBooking(int customerId, int flightNumber)
+        public BookingRepository()
+        {
+
+        }
+        public virtual async Task CreateBooking(int customerId, int flightNumber)
         {
             if (!customerId.IsPositive() || !flightNumber.IsPositive())
             {

@@ -266,3 +266,5 @@ E:\FlyingDutchmanAirlines\FlyingDutchmanAirlines_Tests\obj\Debug\net5.0\ref\Flyi
 E:\FlyingDutchmanAirlines\FlyingDutchmanAirlines_Tests\obj\Debug\net5.0\FlyingDutchmanAirlines_Tests.pdb
 E:\FlyingDutchmanAirlines\FlyingDutchmanAirlines_Tests\obj\Debug\net5.0\FlyingDutchmanAirlines_Tests.genruntimeconfig.cache
 C:\Projects\FlyingDutchmanAirlines\FlyingDutchmanAirlines_Tests\obj\Debug\net5.0\FlyingDutchmanAirlines_Tests.csproj.AssemblyReference.cache
+C:\Projects\FlyingDutchmanAirlines\FlyingDutchmanAirlines_Tests\bin\Debug\net5.0\Castle.Core.dll
+C:\Projects\FlyingDutchmanAirlines\FlyingDutchmanAirlines_Tests\bin\Debug\net5.0\Moq.dll

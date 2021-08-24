@@ -17,6 +17,10 @@ namespace FlyingDutchmanAirlines.RepositoryLayer
         {
             _context = context;
         }
+        public CustomerRepository()
+        {
+
+        }
 
         public async Task<bool> CreateCustomer(string name)
         {
@@ -46,7 +50,7 @@ namespace FlyingDutchmanAirlines.RepositoryLayer
             return string.IsNullOrEmpty(name) || name.Any(x => forbiddenCharacters.Contains(x));
         }
 
-        public async Task<Customer> GetCustomerByName(string name)
+        public virtual async Task<Customer> GetCustomerByName(string name)
         {
             if (IsInvalidCustomerName(name))
             {
