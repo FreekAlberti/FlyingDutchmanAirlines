@@ -32,10 +32,10 @@ namespace FlyingDutchmanAirlines.ServiceLayer
             {
                 Customer customer = await GetCustomerFromDatabase(name) ?? await AddCustomerToDatabase(name);
 
-                //if (!await FlightExistsInDatabase(flightNumber))
-                //{
-                //    return (false, new CouldNotAddBookingToDatabaseException());
-                //}
+                if (!await FlightExistsInDatabase(flightNumber))
+                {
+                    return (false, new CouldNotAddBookingToDatabaseException());
+                }
 
                 await _bookingRepository.CreateBooking(customer.CustomerId, flightNumber);
                 return (true, null);
@@ -67,6 +67,18 @@ namespace FlyingDutchmanAirlines.ServiceLayer
         {
             await _customerRepository.CreateCustomer(name);
             return await _customerRepository.GetCustomerByName(name);
+        }
+
+        private async Task<bool> FlightExistsInDatabase(int flightNumber)
+        {
+            try
+            {
+                return await _flightRepository.GetFlightByFlightNumber(flightNumber) != null;
+            }
+            catch (FlightNotFoundException)
+            {
+                return false;
+            }
         }
     }
 }
