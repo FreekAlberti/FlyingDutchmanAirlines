@@ -7,11 +7,6 @@ namespace FlyingDutchmanAirlines
 {
     public partial class FlyingDutchmanAirlinesContext : DbContext
     {
-        public FlyingDutchmanAirlinesContext()
-        {
-            base.Database.EnsureDeleted();
-        }
-
         public FlyingDutchmanAirlinesContext(DbContextOptions<FlyingDutchmanAirlinesContext> options)
             : base(options)
         {

@@ -1,5 +1,8 @@
 ﻿using FlyingDutchmanAirlines.DatabaseLayer.Models;
+using FlyingDutchmanAirlines.Exceptions;
 using FlyingDutchmanAirlines.RepositoryLayer;
+using FlyingDutchmanAirlines.ServiceLayer;
+using FlyingDutchmanAirlines.Views;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -21,19 +24,6 @@ namespace FlyingDutchmanAirlines_Tests.ServiceLayer
         {
             _mockAirportRepository = new Mock<AirportRepository>();
             _mockFlightRepository = new Mock<FlightRepository>();
-        }
-        [TestMethod]
-        public async Task GetFlights_Success()
-        {
-            Flight flightInDatabase = new Flight
-            {
-                FlightNumber = 148,
-                Origin = 31,
-                Destination = 92
-            };
-            Queue<Flight> mockReturn = new Queue<Flight>(1);
-            mockReturn.Enqueue(flightInDatabase);
-            _mockFlightRepository.Setup(repository => repository.GetFlights()).Returns(mockReturn);
             _mockAirportRepository.Setup(repository => repository.GetAirportByID(31)).ReturnsAsync(new Airport
             {
                 AirportId = 31,
@@ -43,9 +33,96 @@ namespace FlyingDutchmanAirlines_Tests.ServiceLayer
             _mockAirportRepository.Setup(repository => repository.GetAirportByID(92)).ReturnsAsync(new Airport
             {
                 AirportId = 92,
-                City = "Ulaanbaataar",
+                City = "Ulaanbaatar",
                 Iata = "UBN"
             });
+
+            Flight flightInDatabase = new Flight
+            {
+                FlightNumber = 148,
+                Origin = 31,
+                Destination = 92
+            };
+
+            Queue<Flight> mockReturn = new Queue<Flight>(1);
+            mockReturn.Enqueue(flightInDatabase);
+            _mockFlightRepository.Setup(repository => repository.GetFlights()).Returns(mockReturn);
+            _mockFlightRepository.Setup(repository => repository.GetFlightByFlightNumber(148)).Returns(Task.FromResult(flightInDatabase));
+        }
+        [TestMethod]
+        public async Task GetFlights_Success()
+        {
+            FlightService service = new FlightService(_mockAirportRepository.Object, _mockFlightRepository.Object);
+            await foreach (FlightView flightView in service.GetFlights())
+            {
+                Assert.IsNotNull(flightView);
+                Assert.AreEqual(flightView.FlightNumber, "148");
+                Assert.AreEqual(flightView.Origin.City, "Mexico City");
+                Assert.AreEqual(flightView.Origin.Code, "MEX");
+                Assert.AreEqual(flightView.Destination.City, "Ulaanbaatar");
+                Assert.AreEqual(flightView.Destination.Code, "UBN");
+            }
+        }
+        [TestMethod]
+        [ExpectedException(typeof(FlightNotFoundException))]
+        public async Task GetFlights_Failure_RepositoryException()
+        {
+            Flight flightInDatabase = new Flight
+            {
+                FlightNumber = 148,
+                Origin = 31,
+                Destination = 92
+            };
+
+            Queue<Flight> mockReturn = new Queue<Flight>(1);
+            mockReturn.Enqueue(flightInDatabase);
+            _mockFlightRepository.Setup(repository => repository.GetFlights()).Returns(mockReturn);
+            _mockAirportRepository.Setup(repository => repository.GetAirportByID(31)).ThrowsAsync(new FlightNotFoundException());
+            FlightService service = new FlightService(_mockAirportRepository.Object, _mockFlightRepository.Object);
+            await foreach (FlightView _ in service.GetFlights())
+            {
+                ;
+            }
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public async Task GetFlights_Failure_RegularException()
+        {
+            _mockAirportRepository.Setup(repository => repository.GetAirportByID(31)).ThrowsAsync(new NullReferenceException());
+            FlightService service = new FlightService(_mockAirportRepository.Object, _mockFlightRepository.Object);
+
+            await foreach (FlightView _ in service.GetFlights())
+            {
+                ;
+            }
+        }
+        [TestMethod]
+        public async Task GetFlightByFlightNumber_Success()
+        {
+            FlightService service = new FlightService(_mockAirportRepository.Object, _mockFlightRepository.Object);
+            FlightView flightView = await service.GetFlightByFlightNumber(148);
+            Assert.IsNotNull(flightView);
+            Assert.AreEqual(flightView.FlightNumber, "148");
+            Assert.AreEqual(flightView.Origin.City, "Mexico City");
+            Assert.AreEqual(flightView.Origin.Code, "MEX");
+            Assert.AreEqual(flightView.Destination.City, "Ulaanbaatar");
+            Assert.AreEqual(flightView.Destination.Code, "UBN");
+        }
+        [TestMethod]
+        [ExpectedException(typeof(FlightNotFoundException))]
+        public async Task GetFlightByFlightNumber_Failure_RepositoryException_FlightNotFoundException()
+        {
+            _mockFlightRepository.Setup(repository => repository.GetFlightByFlightNumber(-1)).Throws(new FlightNotFoundException());
+            FlightService service = new FlightService(_mockAirportRepository.Object, _mockFlightRepository.Object);
+            await service.GetFlightByFlightNumber(-1);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public async Task GetFlightByFlightNumber_Failure_RepositoryException_Exception()
+        {
+            _mockFlightRepository.Setup(repository => repository.GetFlightByFlightNumber(-1)).Throws(new OverflowException());
+            FlightService service = new FlightService(_mockAirportRepository.Object, _mockFlightRepository.Object);
+            await service.GetFlightByFlightNumber(-1);
         }
     }
 }
