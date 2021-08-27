@@ -96,3 +96,7 @@ E:\FlyingDutchmanAirlines\FlyingDutchmanAirlines\obj\Debug\net5.0\ref\FlyingDutc
 E:\FlyingDutchmanAirlines\FlyingDutchmanAirlines\obj\Debug\net5.0\FlyingDutchmanAirlines.pdb
 E:\FlyingDutchmanAirlines\FlyingDutchmanAirlines\obj\Debug\net5.0\FlyingDutchmanAirlines.genruntimeconfig.cache
 C:\Projects\FlyingDutchmanAirlines\FlyingDutchmanAirlines\obj\Debug\net5.0\FlyingDutchmanAirlines.csproj.AssemblyReference.cache
+C:\Projects\FlyingDutchmanAirlines\FlyingDutchmanAirlines\bin\Debug\net5.0\Microsoft.OpenApi.dll
+C:\Projects\FlyingDutchmanAirlines\FlyingDutchmanAirlines\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Projects\FlyingDutchmanAirlines\FlyingDutchmanAirlines\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Projects\FlyingDutchmanAirlines\FlyingDutchmanAirlines\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll

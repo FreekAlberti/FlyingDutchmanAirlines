@@ -11,6 +11,8 @@ namespace FlyingDutchmanAirlines
         {
             app.UseRouting();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
+            app.UseSwagger();
+            app.UseSwaggerUI(swagger => swagger.SwaggerEndpoint("/swagger/v1/swagger.json", "Flying Dutchman Airlines"));
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -24,6 +26,7 @@ namespace FlyingDutchmanAirlines
             services.AddTransient(typeof(CustomerRepository), typeof(CustomerRepository));
             services.AddDbContext<FlyingDutchmanAirlinesContext>(ServiceLifetime.Transient);
             services.AddTransient(typeof(FlyingDutchmanAirlinesContext), typeof(FlyingDutchmanAirlinesContext));
+            services.AddSwaggerGen();
         }
     }
 }
